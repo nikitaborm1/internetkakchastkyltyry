@@ -140,6 +140,44 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
+        /* Кнопка "Наверх" */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .scroll-to-top.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        
+        .scroll-to-top:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+        
         /* Анимации */
         @keyframes slideDown {
             from {
@@ -226,13 +264,17 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
+        /* ИЗМЕНЕНИЕ: Улучшение отображения изображений */
         .image-card img {
             width: 100%;
             max-width: 500px;
-            height: 220px;
-            object-fit: cover;
+            max-height: 400px; /* Увеличиваем максимальную высоту */
+            height: auto; /* Изменяем с фиксированной высоты на auto */
+            object-fit: contain; /* Показываем изображение целиком без обрезки */
             border-radius: 6px;
             transition: transform 0.3s ease;
+            display: block;
+            margin: 0 auto;
         }
         .image-card img:hover {
             transform: scale(1.03);
@@ -327,6 +369,56 @@
         .animate-delay-4 { animation-delay: 0.4s !important; }
         .animate-delay-5 { animation-delay: 0.5s !important; }
         
+        /* ДОБАВЛЕНО: Модальное окно для изображений */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1002;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #667eea;
+        }
+        
+        .modal-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            font-size: 1.1rem;
+        }
+        
         @media (max-width: 768px) {
             .content {
                 grid-template-columns: 1fr;
@@ -348,12 +440,23 @@
             .pages-container {
                 min-height: 1000px;
             }
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            /* Для мобильных устройств увеличиваем изображения */
+            .image-card img {
+                max-height: 350px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="info-block">
+        <div class="info-block" id="developers-section">
             <div class="institution">ГБПОУ МКАГ</div>
             <div class="developers">Разработчики-студенты: Бормоткин Н.В, Хашагульгов И.Г, Петрушка Д.Р, Алиев А.Ш, Савосина-Поспих Д.И.</div>
         </div>
@@ -377,8 +480,9 @@
         </nav>
 
         <div class="pages-container">
-            <!-- Существующие страницы 1-6 остаются без изменений -->
+            <!-- Существующие страницы 1-10 остаются без изменений -->
             <div id="page1" class="page active">
+                <!-- Содержимое страницы 1 -->
                 <h2>История развития интернета</h2>
                 <div class="content">
                     <div class="text-content">
@@ -438,15 +542,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_688ba9203b43c81a340e38e2_688babbe3b43c81a3411450e/scale_1200" alt="ARPANET">
+                            <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_688ba9203b43c81a340e38e2_688babbe3b43c81a3411450e/scale_1200" alt="ARPANET" onclick="openModal(this)">
                             <div class="image-caption">ARPANET - прародитель современного интернета (1974 год)</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://i.pinimg.com/736x/a0/75/aa/a075aa013ac7395c7476b98f8a5fb6e6.jpg" alt="Первый веб-браузер">
+                            <img src="https://i.pinimg.com/736x/a0/75/aa/a075aa013ac7395c7476b98f8a5fb6e6.jpg" alt="Первый веб-браузер" onclick="openModal(this)">
                             <div class="image-caption">Первый графический веб-браузер Mosaic, сделавший интернет доступным</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://www.shutterstock.com/image-vector/computer-evolution-260nw-283329359.jpg" alt="Развитие интернета">
+                            <img src="https://www.shutterstock.com/image-vector/computer-evolution-260nw-283329359.jpg" alt="Развитие интернета" onclick="openModal(this)">
                             <div class="image-caption">Эволюция интернета от текстовых терминалов до графических интерфейсов</div>
                         </div>
                     </div>
@@ -501,15 +605,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://media.licdn.com/dms/image/D5612AQEuDFUM1lzCAg/article-cover_image-shrink_720_1280/0/1712775708350?e=2147483647&v=beta&t=nUEjnbbyuUm9RK1I7gyKI_7FteceU_EL3kTn3p-G5lc" alt="Цифровая культура">
+                            <img src="https://media.licdn.com/dms/image/D5612AQEuDFUM1lzCAg/article-cover_image-shrink_720_1280/0/1712775708350?e=2147483647&v=beta&t=nUEjnbbyuUm9RK1I7gyKI_7FteceU_EL3kTn3p-G5lc" alt="Цифровая культура" onclick="openModal(this)">
                             <div class="image-caption">Цифровое искусство как новая форма культурного выражения</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://energy-cities.eu/wp-content/uploads/2019/01/shutterstock_70757203.jpg" alt="Социальные сети">
+                            <img src="https://energy-cities.eu/wp-content/uploads/2019/01/shutterstock_70757203.jpg" alt="Социальные сети" onclick="openModal(this)">
                             <div class="image-caption">Социальные сети - платформы для нового культурного взаимодействия</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://biota.ru/images/magazine/3-2022/005.png" alt="Цифровая трансформация культуры">
+                            <img src="https://biota.ru/images/magazine/3-2022/005.png" alt="Цифровая трансформация культуры" onclick="openModal(this)">
                             <div class="image-caption">Цифровая трансформация традиционных культурных практик</div>
                         </div>
                     </div>
@@ -564,15 +668,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/d4e/fc6/dce/d4efc6dce7f9ad7871dd7d31f971f1f4.png" alt="Социальные сети">
+                            <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/d4e/fc6/dce/d4efc6dce7f9ad7871dd7d31f971f1f4.png" alt="Социальные сети" onclick="openModal(this)">
                             <div class="image-caption">Многообразие социальных платформ в современной цифровой экосистеме</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://cf2.ppt-online.org/files2/slide/o/oCbAOKH0YkazTIeyvfUNcQBgiqpRZStxwDn85sJF1/slide-2.jpg" alt="Интернет-мемы">
+                            <img src="https://cf2.ppt-online.org/files2/slide/o/oCbAOKH0YkazTIeyvfUNcQBgiqpRZStxwDn85sJF1/slide-2.jpg" alt="Интернет-мемы" onclick="openModal(this)">
                             <div class="image-caption">Мемы как современная форма фольклора и культурного обмена</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://fsd.multiurok.ru/html/2018/03/17/s_5aad2de36571a/861837_1.png" alt="Цифровые сообщества">
+                            <img src="https://fsd.multiurok.ru/html/2018/03/17/s_5aad2de36571a/861837_1.png" alt="Цифровые сообщества" onclick="openModal(this)">
                             <div class="image-caption">Формирование цифровых сообществ вокруг общих интересов и ценностей</div>
                         </div>
                     </div>
@@ -583,7 +687,7 @@
                 <h2>Цифровое искусство и креативные индустрии</h2>
                 <div class="content">
                     <div class="text-content">
-                        <p>Цифровые технологии произвели революцию в художественном творчестве, создав новые формы искусства и изменив традиционные креативные индустрии. От цифровой живописи до интерактивных инсталляций, от NFT до виртуальных выставок - искусство в интернете обрело новые измерения. Цифровое искусство бросает вызов традиционным представлениям о материальности, оригинальности и авторства, создавая произведения, которые существуют исключительно в виртуальном пространстве и могут бесконечно тиражироваться без потери качества.</p>
+                        <p>Цифровые технологии произвели революцию в художественном творчестве, создав новые формы искусства и изменив традиционные креативные индустрии. От цифровой живописи до интерактивных инсталляций, от NFT до виртуальных выставок - искусство в интернете обрело новые измерения. Цифровое искусство бросает вызов традиционным представлениям о материальности, оригинальности и авторства, создавая произведения, которые существую исключительно в виртуальном пространстве и могут бесконечно тиражироваться без потери качества.</p>
                         
                         <p>Интернет демократизировал доступ к искусству: художники получили возможность напрямую обращаться к глобальной аудитории, минуя традиционные галереи и институции. Платформы типа DeviantArt, ArtStation, Behance стали виртуальными выставочными пространствами для миллионов творцов. Социальные сети позволяют художникам не только демонстрировать свои работы, но и вовлекать аудиторию в творческий процесс, получая мгновенную обратную связь. Это создает новые формы художественного диалога и коллаборации, стирая границы между художником и зрителем.</p>
                         
@@ -626,15 +730,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://img.freepik.com/premium-photo/nft-art-gallery-metaverse-avatar-legs-nftprojects-3d-illustrations_357568-4270.jpg" alt="Цифровые художники">
+                            <img src="https://img.freepik.com/premium-photo/nft-art-gallery-metaverse-avatar-legs-nftprojects-3d-illustrations_357568-4270.jpg" alt="Цифровые художники" onclick="openModal(this)">
                             <div class="image-caption">Новое поколение цифровых художников и их работы в эпоху NFT</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://avatars.mds.yandex.net/i?id=381a7b8aa08f8e8d99fc94a5b9142654_l-5190355-images-thumbs&n=13" alt="Виртуальные выставки">
+                            <img src="https://avatars.mds.yandex.net/i?id=381a7b8aa08f8e8d99fc94a5b9142654_l-5190355-images-thumbs&n=13" alt="Виртуальные выставки" onclick="openModal(this)">
                             <div class="image-caption">Виртуальные выставки делают искусство доступным глобальной аудитории</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://i.pinimg.com/originals/e7/ba/67/e7ba67b1d969ee4513828ecb60338db7.gif" alt="Моушн-дизайн">
+                            <img src="https://i.pinimg.com/originals/e7/ba/67/e7ba67b1d969ee4513828ecb60338db7.gif" alt="Моушн-дизайн" onclick="openModal(this)">
                             <div class="image-caption">Моушн-дизайн - искусство в движении для цифровых платформ</div>
                         </div>
                     </div>
@@ -697,15 +801,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://i.pinimg.com/originals/8f/99/85/8f9985ddaa6fb1f605f321be0b288063.jpg" alt="Виртуальная реальность">
+                            <img src="https://i.pinimg.com/originals/8f/99/85/8f9985ddaa6fb1f605f321be0b288063.jpg" alt="Виртуальная реальность" onclick="openModal(this)">
                             <div class="image-caption">VR и AR технологии создают новые пространства для культурного взаимодействия</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_68088b0993124c3800b9cb62_68088b4272042239304fd0cc/scale_1200" alt="Искусственный интеллект">
+                            <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_68088b0993124c3800b9cb62_68088b4272042239304fd0cc/scale_1200" alt="Искусственный интеллект" onclick="openModal(this)">
                             <div class="image-caption">Искусственный интеллект как новый участник культурного диалога</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://copymate.app/wp-content/uploads/2024/02/metaverse-przyszlosc-marketingu-cyfrowego-i-mozliwosci-dla-marek.jpg" alt="Метавселенные">
+                            <img src="https://copymate.app/wp-content/uploads/2024/02/metaverse-przyszlosc-marketingu-cyfrowego-i-mozliwosci-dla-marek.jpg" alt="Метавселенные" onclick="openModal(this)">
                             <div class="image-caption">Метавселенные - новые измерения для культурного взаимодействия</div>
                         </div>
                     </div>
@@ -761,7 +865,7 @@
                             </div>
                         </div>
 
-                        <p>Цифровое образование создает новые вызовы и возможности для преподавателей. С одной стороны, технологии автоматизируют рутинные задачи (проверка заданий, учет успеваемости), освобождая время для творческой работы с учащимися. С другой стороны, они требуют освоения новых цифровых компетенций и изменения педагогических подходов. Преподаватель из "транслятора знаний" превращается в наставника, фасилитатора и куратора образовательной траектории. Особое значение приобретает развитие "гибких навыков" (soft skills) - критического мышления, креативности, сотрудничества, которые сложно формировать в полностью цифровой среде.</p>
+                        <p>Цифровое образование создает новые вызовы и возможности для преподавателей. С одной стороны, технологии автоматизируют рутинные задачи (проверка заданий, учет успеваемости), освобождая время для творческой работы с учащимися. С другой стороны, они требуют освоения новых цифровых компетенций и изменения педагогических подходы. Преподаватель из "транслятора знаний" превращается в наставника, фасилитатора и куратора образовательной траектории. Особое значение приобретает развитие "гибких навыков" (soft skills) - критического мышления, креативности, сотрудничества, которые сложно формировать в полностью цифровой среде.</p>
 
                         <div class="section-divider"></div>
 
@@ -779,15 +883,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://pic.rutubelist.ru/video/2025-04-11/0e/4a/0e4ab647b23425fcc69468c15c553e75.jpg" alt="Онлайн-обучение">
+                            <img src="https://pic.rutubelist.ru/video/2025-04-11/0e/4a/0e4ab647b23425fcc69468c15c553e75.jpg" alt="Онлайн-обучение" onclick="openModal(this)">
                             <div class="image-caption">Онлайн-курсы сделали образование доступным для миллионов людей по всему миру</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://avatars.mds.yandex.net/i?id=b76980e57dcde62e7257a327a4fb7155_l-5869063-images-thumbs&n=13" alt="Цифровые учебные платформы">
+                            <img src="https://avatars.mds.yandex.net/i?id=b76980e57dcde62e7257a327a4fb7155_l-5869063-images-thumbs&n=13" alt="Цифровые учебные платформы" onclick="openModal(this)">
                             <div class="image-caption">Современные образовательные платформы сочетают видео, интерактивные задания и социальное взаимодействие</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://avatars.mds.yandex.net/i?id=5eb826b36a72714cc20db5d96100cdc0_l-5332191-images-thumbs&n=13" alt="Виртуальные классы">
+                            <img src="https://avatars.mds.yandex.net/i?id=5eb826b36a72714cc20db5d96100cdc0_l-5332191-images-thumbs&n=13" alt="Виртуальные классы" onclick="openModal(this)">
                             <div class="image-caption">Виртуальные классы и онлайн-семинары стали неотъемлемой частью современного образования</div>
                         </div>
                     </div>
@@ -841,15 +945,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://blog.sf.education/wp-content/uploads/2023/05/e-commerce-link-building-1520x800-1.png" alt="Электронная коммерция">
+                            <img src="https://blog.sf.education/wp-content/uploads/2023/05/e-commerce-link-building-1520x800-1.png" alt="Электронная коммерция" onclick="openModal(this)">
                             <div class="image-caption">Электронная коммерция изменила культуру потребления</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://sova.gg/media/news/IMG_0284.jpeg" alt="Цифровые валюты">
+                            <img src="https://sova.gg/media/news/IMG_0284.jpeg" alt="Цифровые валюты" onclick="openModal(this)">
                             <div class="image-caption">Цифровые валюты создают новые финансовые культуры</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://cdn.forbes.ru/forbes-static/shareimages/539187.jpg?v=1754397547" alt="Шеринг-экономика">
+                            <img src="https://cdn.forbes.ru/forbes-static/shareimages/539187.jpg?v=1754397547" alt="Шеринг-экономика" onclick="openModal(this)">
                             <div class="image-caption">Шеринг-экономика меняет представления о владении</div>
                         </div>
                     </div>
@@ -902,15 +1006,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://avatars.mds.yandex.net/i?id=98b8d9f3985ef01268c43a805815222e_l-8174408-images-thumbs&n=13" alt="Политический активизм в интернете">
+                            <img src="https://avatars.mds.yandex.net/i?id=98b8d9f3985ef01268c43a805815222e_l-8174408-images-thumbs&n=13" alt="Политический активизм в интернете" onclick="openModal(this)">
                             <div class="image-caption">Интернет стал важным инструментом политического активизма</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://stolicaonego.ru/images/news/433/433876/main.jpg" alt="Выборы и интернет">
+                            <img src="https://stolicaonego.ru/images/news/433/433876/main.jpg" alt="Выборы и интернет" onclick="openModal(this)">
                             <div class="image-caption">Цифровые технологии меняют проведение выборов и политических кампаний</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://www.computerra.ru/wp-content/uploads/2024/10/111111-1.png" alt="Дезинформация">
+                            <img src="https://www.computerra.ru/wp-content/uploads/2024/10/111111-1.png" alt="Дезинформация" onclick="openModal(this)">
                             <div class="image-caption">Борьба с дезинформацией стала ключевым вызовом цифровой эпохи</div>
                         </div>
                     </div>
@@ -927,7 +1031,7 @@
                         <p>Цифровая этика охватывает широкий круг вопросов: от ответственности разработчиков ИИ до прав пользователей на контроль над своими данными. Этические дилеммы возникают при использовании персональных данных для таргетированной рекламы, при создании алгоритмов, влияющих на трудоустройство или доступ к кредитам, при разработке автономного оружия. Кибербезопасность же касается защиты информационных систем от атак, что важно как для отдельных пользователей, так и для целых государств. Эти две сферы тесно связаны, поскольку без этического подхода меры безопасности могут использоваться для усиления контроля и ограничения свобод.</p>
                         
                         <div class="quote">
-                            "Цифровая эпоха требует переосмысления этических принципов и правовых норм. Мы должны найти баланс между инновациями и безопасностью, между удобством и приватностью, между эффективностью и справедливостью. Культура кибербезопасности и цифровой этики должна стать неотъемлемой частью образования и корпоративной культуры."
+                            "Цифровая эпоха требует переосмысления этических принципов и правовых норм. Мы должны найти баланс между инновациями и безопасностью, между удобством и приватности, между эффективностью и справедливостью. Культура кибербезопасности и цифровой этики должна стать неотъемлемой частью образования и корпоративной культуры."
                         </div>
 
                         <div class="section-divider"></div>
@@ -964,15 +1068,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://falcongaze.com/assets/pictures/pic2024/pic_020424_02.jpg" alt="Кибербезопасность">
+                            <img src="https://falcongaze.com/assets/pictures/pic2024/pic_020424_02.jpg" alt="Кибербезопасность" onclick="openModal(this)">
                             <div class="image-caption">Кибербезопасность защищает данные и системы от угроз</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://7universum.com/pdf/economy/12(110)/Ratner.files/image001.png" alt="Цифровая этика">
+                            <img src="https://7universum.com/pdf/economy/12(110)/Ratner.files/image001.png" alt="Цифровая этика" onclick="openModal(this)">
                             <div class="image-caption">Цифровая этика становится важной частью технологического развития</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://sh24-bratsk-r138.gosweb.gosuslugi.ru/netcat_files/48/234/6GPRgFIx716oJDuOa1RyA6jBFfOQrqOIjJKbNtIJuu5_bV5Lt_vAps6A_XE09KhK_jg6Z5CciEcWmO7hBzpFrxv.jpg" alt="Защита данных">
+                            <img src="https://sh24-bratsk-r138.gosweb.gosuslugi.ru/netcat_files/48/234/6GPRgFIx716oJDuOa1RyA6jBFfOQrqOIjJKbNtIJuu5_bV5Lt_vAps6A_XE09KhK_jg6Z5CciEcWmO7hBzpFrxv.jpg" alt="Защита данных" onclick="openModal(this)">
                             <div class="image-caption">Защита персональных данных - ключевой вопрос цифровой эпохи</div>
                         </div>
                     </div>
@@ -997,7 +1101,7 @@
                         <h3>Тенденции глобализации и культурного разнообразия в интернете:</h3>
                         <ul class="impact-list">
                             <li style="--delay: 0.1s"><strong>Глобальные платформы и локальный контент:</strong> Такие платформы как YouTube, Netflix и Spotify сочетают глобальный reach с локализацией контента. Они предлагают международный контент, но также инвестируют в производство локального контента, что позволяет культурам находить глобальную аудиторию.</li>
-                            <li style="--delay: 0.2s"><strong>Многоязычие интернета:</strong> Хотя английский остается доминирующим языком интернета, доля контента на других языках постоянно растет. Технологии машинного перевода разрушают языковые барьеры, позволяя людям потреблять контент на любом языке.</li>
+                            <li style="--delay: 0.2s"><strong>Многоязычие интернета:</strong> Хотя английский остается доминирующим языком интернета, доля контента на других языках постоянно растет. Технологии машинного перевода разрушают языковые барьеры, позволяя людям потребовать контент на любом языке.</li>
                             <li style="--delay: 0.3s"><strong>Цифровой колониализм:</strong> Критики указывают, что доминирование западных технологических компаний и платформ может приводить к культурному империализму и утрате культурного суверенитета. Это вызывает дискуссии о необходимости развития национальных цифровых экосистем.</li>
                             <li style="--delay: 0.4s"><strong>Транснациональные сообщества:</strong> Диаспоры и мигранты используют интернет для поддержания связей со своей культурой и одновременной интеграции в новое общество. Это создает новые формы культурной идентичности, которые не привязаны к конкретной территории.</li>
                             <li style="--delay: 0.5s"><strong>Культурный обмен и гибридизация:</strong> Интернет ускоряет культурный обмен, приводя к созданию гибридных форм в музыке, искусстве, моде и кулинарии. Эти гибриды становятся новыми культурные явления, которые трудно отнести к какой-то одной традиции.</li>
@@ -1025,15 +1129,15 @@
                     
                     <div class="image-section">
                         <div class="image-card">
-                            <img src="https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/479546/gettyimages-140054736.jpg&w=2000&op=resize" alt="Глобализация">
+                            <img src="https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/479546/gettyimages-140054736.jpg&w=2000&op=resize" alt="Глобализация" onclick="openModal(this)">
                             <div class="image-caption">Интернет соединяет культуры со всего мира</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://www.easy-articles.org/wp-content/uploads/2024/01/14678673_l.jpg" alt="Культурное разнообразие">
+                            <img src="https://www.easy-articles.org/wp-content/uploads/2024/01/14678673_l.jpg" alt="Культурное разнообразие" onclick="openModal(this)">
                             <div class="image-caption">Культурное разнообразие находит свое отражение в интернете</div>
                         </div>
                         <div class="image-card">
-                            <img src="https://avatars.mds.yandex.net/i?id=51d698ddcbeefec85c12e75b3bc3ab62_l-5233430-images-thumbs&n=13" alt="Глобальные сообщества">
+                            <img src="https://avatars.mds.yandex.net/i?id=51d698ddcbeefec85c12e75b3bc3ab62_l-5233430-images-thumbs&n=13" alt="Глобальные сообщества" onclick="openModal(this)">
                             <div class="image-caption">Глобальные интернет-сообщества создают новую культурную динамику</div>
                         </div>
                     </div>
@@ -1041,6 +1145,16 @@
             </div>
         </div>
     </div>
+
+    <!-- ДОБАВЛЕНО: Модальное окно для изображений -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <!-- Кнопка "Наверх" -->
+    <button class="scroll-to-top" id="scrollToTopBtn" aria-label="Вернуться к разработчикам">↑</button>
 
     <script>
         let currentPage = 'page1';
@@ -1108,10 +1222,61 @@
             }, 600);
         }
         
+        // ДОБАВЛЕНО: Функции для модального окна
+        function openModal(imgElement) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'flex';
+            modalImg.src = imgElement.src;
+            modalCaption.textContent = imgElement.parentElement.querySelector('.image-caption').textContent;
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+        
+        // Закрытие модального окна при клике вне изображения
+        document.getElementById('imageModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Закрытие модального окна по клавише Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
         // Добавляем ripple эффект на все кнопки при клике
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 createRippleEffect(this);
+            });
+        });
+        
+        // Функционал кнопки "Наверх"
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        const developersSection = document.getElementById('developers-section');
+        
+        // Показываем/скрываем кнопку при прокрутке
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+        
+        // Обработчик клика по кнопке "Наверх"
+        scrollToTopBtn.addEventListener('click', function() {
+            developersSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
         });
     </script>
