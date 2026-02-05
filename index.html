@@ -140,6 +140,242 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
+        /* Стили для викторины */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 10px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 8px;
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .quiz-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .answer-option {
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .answer-option:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .answer-option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .answer-option.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        
+        .answer-option.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        
+        .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .answer-option.selected .option-letter {
+            background: white;
+            color: #667eea;
+        }
+        
+        .answer-option.correct .option-letter {
+            background: white;
+            color: #28a745;
+        }
+        
+        .answer-option.incorrect .option-letter {
+            background: white;
+            color: #dc3545;
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .quiz-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+        }
+        
+        .quiz-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .quiz-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .quiz-btn.secondary {
+            background: #6c757d;
+        }
+        
+        .quiz-results {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .results-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+        
+        .results-message {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+        }
+        
+        .results-details {
+            text-align: left;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .result-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .result-item.correct {
+            border-left: 4px solid #28a745;
+        }
+        
+        .result-item.incorrect {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .result-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-answer {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .result-answer.correct-answer {
+            color: #28a745;
+        }
+        
+        .result-answer.user-answer {
+            color: #dc3545;
+        }
+        
+        .quiz-explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #6c757d;
+            border-left: 3px solid #667eea;
+        }
+        
         /* Кнопка "Наверх" */
         .scroll-to-top {
             position: fixed;
@@ -231,7 +467,6 @@
             animation: fadeIn 0.8s ease-out 0.3s both;
         }
         
-        /* ИЗМЕНЕНИЕ: Оптимизация макета .content для ПК версии */
         .content {
             display: grid;
             grid-template-columns: 1fr;
@@ -239,14 +474,13 @@
             align-items: start;
         }
         
-        /* ДЛЯ ПК ВЕРСИИ: Используем две колонки только если есть изображения */
         @media (min-width: 769px) {
             .content.has-images {
-                grid-template-columns: 2fr 1fr; /* Текст занимает больше места */
+                grid-template-columns: 2fr 1fr;
             }
             
             .content:not(.has-images) {
-                grid-template-columns: 1fr; /* Только текст на всю ширину */
+                grid-template-columns: 1fr;
             }
         }
         
@@ -254,7 +488,7 @@
             line-height: 1.6;
             font-size: 1rem;
             color: #2c3e50;
-            width: 100%; /* Убедимся, что текст занимает всю доступную ширину */
+            width: 100%;
         }
         .text-content p {
             margin-bottom: 1rem;
@@ -262,14 +496,12 @@
             animation: fadeIn 0.8s ease-out 0.4s both;
         }
         
-        /* ИЗМЕНЕНИЕ: Оптимизация для страниц без изображений */
         .image-section {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
         
-        /* Скрываем секцию с изображениями, если она пустая */
         .image-section:empty {
             display: none;
         }
@@ -447,7 +679,6 @@
                 grid-template-columns: 1fr;
             }
             
-            /* МОБИЛЬНАЯ ВЕРСИЯ: всегда одна колонка, оставляем как есть */
             .content.has-images {
                 grid-template-columns: 1fr;
             }
@@ -479,6 +710,15 @@
             .image-card img {
                 max-height: 350px;
             }
+            
+            .quiz-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -505,6 +745,7 @@
             <button class="nav-btn" onclick="showPage('page8')">Интернет и политика</button>
             <button class="nav-btn" onclick="showPage('page9')">Кибербезопасность</button>
             <button class="nav-btn" onclick="showPage('page10')">Глобализация</button>
+            <button class="nav-btn" onclick="showPage('page11')">Викторина</button>
         </nav>
 
         <div class="pages-container">
@@ -827,7 +1068,7 @@
                         
                         <p>Будущее культуры тесно связано с цифровыми технологиями, которые открывают беспрецедентные возможности для сохранения, развития и распространения культурных ценностей. Однако успешное развитие цифровой культуры требует внимательного отношения к этическим, социальным и психологическим аспектам технологической трансформации, чтобы обеспечить сохранение человеческого измерения в цифровую эпоху. Необходимо найти баланс между технологическими инновациями и сохранением культурной аутентичности, между глобализацией и культурным разнообразием, между виртуальным и реальным опытом. Только тогда интернет сможет реализовать свой потенциал как инструмент культурного обогащения, а не как сила культурной homogenization.</p>
 
-                        <p>В перспективе мы можем ожидать дальнейшей конвергенции технологий и культурных практик. Искусственный интеллект, интернет вещей, биотехнологии и другие прорывные технологии будут все более интегрироваться в культурную сферу, создавая принципиально новые формы культурного выражения и взаимодействия. Ключевой задачей становится развитие цифровой грамотности и культурной компетентности, которые позволят людям эффективно ориентироваться в этом сложном гибридном пространстве и активно участвовать в создании культуры будущего. Образовательные системы должны адаптироваться к этим изменениям, готовя новое поколение не только к потреблению, но и к созиданию цифровой культуры.</p>
+                        <p>В перспективе мы можем ожидать дальнейшей конвергенции технологий и культурных практик. Искусственный интеллект, интернет вещей, биотехнологии и другие прорывные технологии будут все более интегрироваться в культурную сферу, создавая принципиально новые формы культурного выражения и взаимодействия. Ключевой задача становится развитие цифровой грамотности и культурной компетентности, которые позволят людям эффективно ориентироваться в этом сложном гибридном пространстве и активно участвовать в создании культуры будущего. Образовательные системы должны адаптироваться к этим изменениям, готовя новое поколение не только к потреблению, но и к созиданию цифровой культуры.</p>
                     </div>
                     
                     <div class="image-section">
@@ -1136,7 +1377,7 @@
                             <li style="--delay: 0.2s"><strong>Многоязычие интернета:</strong> Хотя английский остается доминирующим языком интернета, доля контента на других языках постоянно растет. Технологии машинного перевода разрушают языковые барьеры, позволяя людям потреблять контент на любом языке.</li>
                             <li style="--delay: 0.3s"><strong>Цифровой колониализм:</strong> Критики указывают, что доминирование западных технологических компаний и платформ может приводить к культурному империализму и утрате культурного суверенитета. Это вызывает дискуссии о необходимости развития национальных цифровых экосистем.</li>
                             <li style="--delay: 0.4s"><strong>Транснациональные сообщества:</strong> Диаспоры и мигранты используют интернет для поддержания связей со своей культурой и одновременной интеграции в новое общество. Это создает новые формы культурной идентичности, которые не привязаны к конкретной территории.</li>
-                            <li style="--delay: 0.5s"><strong>Культурный обмен и гибридизация:</strong> Интернет ускоряет культурный обмен, приводя к созданию гибридных форм в музыке, искусстве, моде и кулинарии. Эти гибриды становятся новыми культурными явлениями, которые трудно отнести к какой-то одной традиции.</li>
+                            <li style="--delay: 0.5s"><strong>Культурный обмен и гибридизация:</strong> Интернет ускоряет культурный обмен, приводя к создание гибридных форм в музыке, искусстве, моде и кулинарии. Эти гибриды становятся новыми культурными явлениями, которые трудно отнести к какой-то одной традиции.</li>
                         </ul>
 
                         <div class="section-divider"></div>
@@ -1175,6 +1416,35 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Страница 11 - Интерактивная викторина -->
+            <div id="page11" class="page">
+                <h2>Интерактивная викторина: Интернет-культура</h2>
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <p>Проверьте свои знания о цифровой культуре, истории интернета и современных технологиях. Ответьте на все 12 вопросов и узнайте свой результат!</p>
+                    </div>
+                    
+                    <div class="quiz-progress">
+                        <span id="current-question">1</span> из <span id="total-questions">12</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span id="quiz-score">0/12</span>
+                    </div>
+                    
+                    <div id="quiz-content">
+                        <!-- Здесь будет динамически генерироваться контент викторины -->
+                    </div>
+                    
+                    <div class="quiz-navigation" id="quiz-navigation">
+                        <button class="quiz-btn secondary" id="prev-btn" onclick="prevQuestion()" disabled>Предыдущий</button>
+                        <button class="quiz-btn" id="next-btn" onclick="nextQuestion()">Следующий</button>
+                        <button class="quiz-btn" id="check-btn" onclick="checkAnswers()" style="display: none;">Проверить результаты</button>
+                        <button class="quiz-btn secondary" id="restart-btn" onclick="restartQuiz()" style="display: none;">Начать заново</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1198,6 +1468,11 @@
             const newPage = document.getElementById(pageId);
             const oldBtn = document.querySelector(`.nav-btn.active`);
             const newBtn = document.querySelector(`.nav-btn[onclick*="${pageId}"]`);
+            
+            // Если переходим на страницу викторины, инициализируем её
+            if (pageId === 'page11' && !quizInitialized) {
+                initializeQuiz();
+            }
             
             // Анимация исчезновения текущей страницы
             oldPage.classList.add('exiting');
@@ -1310,6 +1585,304 @@
                 behavior: 'smooth',
                 block: 'start'
             });
+        });
+        
+        // КОД ВИКТОРИНЫ
+        let quizInitialized = false;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizCompleted = false;
+        
+        const quizQuestions = [
+            {
+                question: "Что такое интернет-мем?",
+                options: [
+                    "Любой смешной видеоролик в интернете",
+                    "Название популярного сайта",
+                    "Специальная программа для создания мемов",
+                    "Уникальный формат контента, быстро распространяющийся в сети и имеющий юмористический характер"
+                ],
+                correctAnswer: 3,
+                explanation: "Интернет-мем — это уникальный формат контента, который быстро распространяется в сети, часто имеет юмористический характер и отражает текущие культурные тренды."
+            },
+            {
+                question: "Какой год считается началом массового распространения социальных сетей в России?",
+                options: ["2000", "2005", "2006", "2010"],
+                correctAnswer: 2,
+                explanation: "2006 год считается началом массового распространения социальных сетей в России. В этом году появились и стали популярными такие платформы, как «ВКонтакте» и «Одноклассники»."
+            },
+            {
+                question: "Что такое флешмоб?",
+                options: [
+                    "Вид современного танца",
+                    "Массовое мероприятие, организованное через интернет",
+                    "Название популярного приложения",
+                    "Вид интернет-мошенничества"
+                ],
+                correctAnswer: 1,
+                explanation: "Флешмоб — это массовое мероприятие, организованное через интернет, в котором группа людей внезапно собирается в общественном месте, выполняет заранее оговоренные действия и затем расходится."
+            },
+            {
+                question: "Какой из этих сайтов является старейшим русскоязычным порталом?",
+                options: ["Яндекс", "Mail.ru", "Rambler", "Google.ru"],
+                correctAnswer: 1,
+                explanation: "Mail.ru был основан в 1998 году и является одним из старейших русскоязычных порталов, предоставляющим почтовые услуги и другие сервисы."
+            },
+            {
+                question: "Что такое стриминг?",
+                options: [
+                    "Прямая трансляция контента через интернет",
+                    "Процесс загрузки файлов",
+                    "Вид интернет-рекламы",
+                    "Способ защиты данных"
+                ],
+                correctAnswer: 0,
+                explanation: "Стриминг — это технология передачи данных, которая позволяет пользователям получать доступ к аудио- и видеоконтенту в реальном времени через интернет без необходимости загрузки файлов на устройство."
+            },
+            {
+                question: "Какой формат контента стал популярным благодаря социальным сетям?",
+                options: ["Длинные статьи", "Аудиокниги", "Короткие видео", "Электронные книги"],
+                correctAnswer: 2,
+                explanation: "Короткие видео стали особенно популярными благодаря социальным сетям, таким как TikTok, Instagram и YouTube Shorts, которые ориентированы на быстрый и визуально привлекательный контент."
+            },
+            {
+                question: "Что такое киберспорт?",
+                options: [
+                    "Профессиональные соревнования по компьютерным играм",
+                    "Соревнования по программированию",
+                    "Спортивные игры с использованием виртуальной реальности",
+                    "Соревнования по скоростной печати"
+                ],
+                correctAnswer: 0,
+                explanation: "Киберспорт — это профессиональные соревнования по компьютерным играм, где игроки или команды соревнуются друг с другом, часто на крупных турнирах с призовыми фондами."
+            },
+            {
+                question: "Какой язык программирования стал основой для создания первых веб-сайтов?",
+                options: ["Python", "Java", "HTML", "C++"],
+                correctAnswer: 2,
+                explanation: "HTML (HyperText Markup Language) — это язык разметки, который стал основой для создания первых веб-сайтов. Он используется для структурирования содержимого веб-страниц."
+            },
+            {
+                question: "Что такое краудфандинг?",
+                options: [
+                    "Вид интернет-мошенничества",
+                    "Вид социальной сети",
+                    "Система интернет-платежей",
+                    "Сбор средств на проекты через интернет"
+                ],
+                correctAnswer: 3,
+                explanation: "Краудфандинг — это метод финансирования проектов за счёт добровольных взносов большого количества людей, обычно через специализированные интернет-платформы."
+            },
+            {
+                question: "Какой символ стал международным символом Wi-Fi?",
+                options: ["Молния", "Волны", "Стрелка", "Круг"],
+                correctAnswer: 1,
+                explanation: "Символ Wi-Fi представляет собой стилизованное изображение радиоволн, расходящихся от точки, что символизирует беспроводную передачу данных."
+            },
+            {
+                question: "Что такое цифровая идентичность?",
+                options: [
+                    "Пароль от электронной почты",
+                    "IP-адрес компьютера",
+                    "Совокупность данных, определяющих человека в интернете",
+                    "Никнейм в социальных сетях"
+                ],
+                correctAnswer: 2,
+                explanation: "Цифровая идентичность — это совокупность данных, которые определяют человека или организацию в цифровом пространстве. Это может включать логины, пароли, биометрические данные, историю онлайн-активности и другую информацию."
+            },
+            {
+                question: "Какое изобретение сделало интернет доступным для массового пользователя?",
+                options: ["Браузер Mosaic", "Первый компьютер", "Первый сервер", "Протокол TCP/IP"],
+                correctAnswer: 0,
+                explanation: "Браузер Mosaic, разработанный в 1993 году, стал первым веб-браузером с графическим интерфейсом, который сделал интернет доступным и понятным для массового пользователя."
+            }
+        ];
+        
+        function initializeQuiz() {
+            quizInitialized = true;
+            currentQuestionIndex = 0;
+            userAnswers = new Array(quizQuestions.length).fill(null);
+            quizCompleted = false;
+            renderQuiz();
+        }
+        
+        function renderQuiz() {
+            const quizContent = document.getElementById('quiz-content');
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            
+            if (quizCompleted) {
+                showResults();
+                return;
+            }
+            
+            // Обновляем прогресс
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = quizQuestions.length;
+            document.getElementById('progress-fill').style.width = `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%`;
+            
+            // Обновляем счет
+            const score = calculateScore();
+            document.getElementById('quiz-score').textContent = `${score}/${quizQuestions.length}`;
+            
+            // Генерируем контент вопроса
+            let optionsHtml = '';
+            currentQuestion.options.forEach((option, index) => {
+                let optionClass = 'answer-option';
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionClass += ' selected';
+                }
+                
+                optionsHtml += `
+                    <div class="${optionClass}" onclick="selectAnswer(${index})">
+                        <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                        <div class="option-text">${option}</div>
+                    </div>
+                `;
+            });
+            
+            quizContent.innerHTML = `
+                <div class="quiz-question">
+                    <div class="question-number">Вопрос ${currentQuestionIndex + 1} из ${quizQuestions.length}</div>
+                    <div class="question-text">${currentQuestion.question}</div>
+                    <div class="answer-options">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+            
+            // Обновляем кнопки навигации
+            updateNavigationButtons();
+        }
+        
+        function selectAnswer(answerIndex) {
+            if (quizCompleted) return;
+            
+            userAnswers[currentQuestionIndex] = answerIndex;
+            renderQuiz();
+        }
+        
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const checkBtn = document.getElementById('check-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            
+            // Кнопка "Предыдущий"
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Кнопка "Следующий"
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                nextBtn.style.display = 'inline-block';
+                checkBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'none';
+                checkBtn.style.display = 'inline-block';
+            }
+            
+            // Кнопки для завершенной викторины
+            if (quizCompleted) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                checkBtn.style.display = 'none';
+                restartBtn.style.display = 'inline-block';
+            } else {
+                restartBtn.style.display = 'none';
+            }
+        }
+        
+        function nextQuestion() {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuiz();
+            }
+        }
+        
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuiz();
+            }
+        }
+        
+        function checkAnswers() {
+            quizCompleted = true;
+            renderQuiz();
+        }
+        
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = new Array(quizQuestions.length).fill(null);
+            quizCompleted = false;
+            renderQuiz();
+        }
+        
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < quizQuestions.length; i++) {
+                if (userAnswers[i] === quizQuestions[i].correctAnswer) {
+                    score++;
+                }
+            }
+            return score;
+        }
+        
+        function showResults() {
+            const quizContent = document.getElementById('quiz-content');
+            const score = calculateScore();
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = 'Отлично! Вы настоящий эксперт в области интернет-культуры!';
+            } else if (percentage >= 70) {
+                message = 'Хорошо! Вы хорошо разбираетесь в цифровой культуре.';
+            } else if (percentage >= 50) {
+                message = 'Неплохо! У вас есть базовые знания об интернете и цифровой культуре.';
+            } else {
+                message = 'Попробуйте еще раз! Изучите материалы на этом сайте и улучшите свой результат.';
+            }
+            
+            // Генерируем детали по каждому вопросу
+            let detailsHtml = '';
+            quizQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correctAnswer;
+                const resultClass = isCorrect ? 'correct' : 'incorrect';
+                
+                detailsHtml += `
+                    <div class="result-item ${resultClass}">
+                        <div class="result-question">${index + 1}. ${question.question}</div>
+                        <div class="result-answer correct-answer">Правильный ответ: ${question.options[question.correctAnswer]}</div>
+                        ${!isCorrect && userAnswer !== null ? 
+                            `<div class="result-answer user-answer">Ваш ответ: ${question.options[userAnswer]}</div>` : 
+                            ''
+                        }
+                        <div class="quiz-explanation">${question.explanation}</div>
+                    </div>
+                `;
+            });
+            
+            quizContent.innerHTML = `
+                <div class="quiz-results">
+                    <h3>Ваш результат</h3>
+                    <div class="results-score">${score}/${quizQuestions.length}</div>
+                    <div class="results-message">${message}</div>
+                    <div class="results-details">
+                        <h4>Детализация ответов:</h4>
+                        ${detailsHtml}
+                    </div>
+                </div>
+            `;
+            
+            updateNavigationButtons();
+        }
+        
+        // Инициализация викторины при первой загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Если пользователь сразу перешел на страницу викторины
+            if (window.location.hash === '#page11') {
+                showPage('page11');
+            }
         });
     </script>
 </body>
